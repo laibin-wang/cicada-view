@@ -1,0 +1,6 @@
+{
+  "extends": ["@cicada-design/stylelint-config"],
+  "rule": {
+    "font-family-name-quotes": "always-unless-keyword"
+  }
+}

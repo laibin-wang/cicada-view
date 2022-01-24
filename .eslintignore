@@ -1,0 +1,5 @@
+vscode/
+dist/
+public/
+!.cz-config.js
+!.eslintrc.js
