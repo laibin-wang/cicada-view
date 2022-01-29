@@ -3,8 +3,7 @@
     class="line"
     v-show="showLine"
     :style="[offset, borderCursor]"
-    @mousedown="handleDown"
-  >
+    @mousedown="handleDown">
     <div class="action" :style="actionStyle">
       <span class="del" @click="handleRemove">&times;</span>
       <span class="value">{{ startV }}</span>

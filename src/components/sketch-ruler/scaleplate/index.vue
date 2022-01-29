@@ -14,7 +14,7 @@ import { drawerCanvasRuler } from './utils'
 import { defineComponent, PropType, reactive, ref, onMounted, watch } from 'vue'
 
 export default defineComponent({
-  name: 'ScaleplateCanvas',
+  name: 'CanvasRuler',
   emits: ['onAddLine', 'update:showIndicator', 'update:valueNum'],
   props: {
     showIndicator: Boolean,
