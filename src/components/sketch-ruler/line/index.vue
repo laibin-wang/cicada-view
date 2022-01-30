@@ -3,7 +3,8 @@
     class="line"
     v-show="showLine"
     :style="[offset, borderCursor]"
-    @mousedown="handleDown">
+    @mousedown="handleDown"
+  >
     <div class="action" :style="actionStyle">
       <span class="del" @click="handleRemove">&times;</span>
       <span class="value">{{ startV }}</span>
@@ -15,7 +16,7 @@
 import { defineComponent, ref, onMounted, computed } from 'vue'
 
 export default defineComponent({
-  name: 'LineRuler',
+  name: 'Line',
   props: {
     index: {
       type: Number,
@@ -61,14 +62,13 @@ export default defineComponent({
     })
 
     const offset = computed(() => {
-      const offset = (startV.value * props.start) * props.scale
+      const offset = startV.value * props.start * props.scale
       setShowLine(offset)
 
       if (props.horizontal) {
         return { left: `${offset}px` }
-      } else {
-        return { top: `${offset}px` }
       }
+      return { top: `${offset}px` }
     })
 
     const borderCursor = computed(() => {
@@ -79,20 +79,18 @@ export default defineComponent({
           borderLeft: borderCss,
           cursor: props.isShowReferLine ? 'ew-resize' : 'none'
         }
-      } else {
-        return {
-          borderTop: borderCss,
-          cursor: props.isShowReferLine ? 'ns-resize' : 'none'
-        }
+      }
+      return {
+        borderTop: borderCss,
+        cursor: props.isShowReferLine ? 'ns-resize' : 'none'
       }
     })
 
     const actionStyle = computed(() => {
       if (props.horizontal) {
         return { top: `${props.thick}px` }
-      } else {
-        return { left: `${props.thick}px` }
       }
+      return { left: `${props.thick}px` }
     })
 
     const handleDown = (e: MouseEvent) => {
@@ -103,7 +101,9 @@ export default defineComponent({
 
       const onMove = (e: MouseEvent) => {
         const currentD = props.vertical ? e.clientY : e.clientX
-        const newValue = Math.round(initValue + (currentD - startD) / props.scale)
+        const newValue = Math.round(
+          initValue + (currentD - startD) / props.scale
+        )
         startV.value = newValue
       }
 
@@ -137,7 +137,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.line{
+.line {
   position: absolute;
   pointer-events: auto;
   .action {

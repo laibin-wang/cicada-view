@@ -5,7 +5,8 @@
     @click="handle($event, 'click')"
     @mouseenter="handle($event, 'enter')"
     @mousemove="handle($event, 'move')"
-    @mouseleave="$emit('update:showIndicator', false)"></canvas>
+    @mouseleave="$emit('update:showIndicator', false)"
+  ></canvas>
 </template>
 
 <script lang="ts">
@@ -14,7 +15,7 @@ import { drawerCanvasRuler } from './utils'
 import { defineComponent, PropType, reactive, ref, onMounted, watch } from 'vue'
 
 export default defineComponent({
-  name: 'ScaleplateRuler',
+  name: 'Scaleplate',
   props: {
     showIndicator: Boolean,
     valueNum: Number,
@@ -49,15 +50,13 @@ export default defineComponent({
     },
     palette: {
       type: Object as PropType<PaletteOptions>,
-      default: () => {
-        return {
-          bgColor: 'rgba(225,225,225, 0)',
-          fontColor: '#7D8694',
-          shadowColor: '#E8E8E8',
-          longfgColor: '#BABBBC',
-          shortfgColor: '#C8CDD0'
-        }
-      }
+      default: () => ({
+        bgColor: 'rgba(225,225,225, 0)',
+        fontColor: '#7D8694',
+        shadowColor: '#E8E8E8',
+        longfgColor: '#BABBBC',
+        shortfgColor: '#C8CDD0'
+      })
     }
   },
   emits: ['onAddLine', 'update:showIndicator', 'update:valueNum'],
@@ -78,7 +77,9 @@ export default defineComponent({
         $canvas.value.height = props.height * ratio
         const ctx = state.canvasContext
         if (ctx) {
-          ctx.font = `${12 * ratio}px -apple-system,"Helvetica Neue", ".SFNSText-Regular", "SF UI Text", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif`
+          ctx.font = `${
+            12 * ratio
+          }px -apple-system,"Helvetica Neue", ".SFNSText-Regular", "SF UI Text", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif`
           ctx.lineWidth = 1
           ctx.textBaseline = 'middle'
         }
@@ -88,7 +89,7 @@ export default defineComponent({
     const drawRuler = (ratio: number) => {
       const ruler: RulerOptions = {
         scale: props.scale,
-        ratio: ratio,
+        ratio,
         width: props.width,
         height: props.height
       }
@@ -96,7 +97,7 @@ export default defineComponent({
       if (state.canvasContext) {
         const options: CanvasRulerOptions = {
           ctx: state.canvasContext,
-          ruler: ruler,
+          ruler,
           palette: props.palette,
           start: props.start,
           shadowStart: props.shadowStart,
@@ -114,7 +115,10 @@ export default defineComponent({
       drawRuler(ratio)
     })
 
-    watch(() => props.start, () => drawRuler(ratio))
+    watch(
+      () => props.start,
+      () => drawRuler(ratio)
+    )
 
     watch([() => props.width, () => props.height], () => {
       updateCanvasContext(ratio)
@@ -122,7 +126,8 @@ export default defineComponent({
     })
 
     const handle = (e: MouseEvent, key: string) => {
-      const getValueByOffset = (offset: number, start: number, scale: number) => Math.round(start + offset / scale)
+      const getValueByOffset = (offset: number, start: number, scale: number) =>
+        Math.round(start + offset / scale)
       const offset = props.horizontal ? e.offsetX : e.offsetY
       const value = getValueByOffset(offset, props.start, props.scale)
 

@@ -5,9 +5,10 @@
     "prefer-object-spread": "off"
   },
   "overrides": [{
-    "files": ["src/views/**/*.vue"],
+    "files": ["src/**/*.vue"],
     "rules": {
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "vue/no-mutating-props": "off"
     }
   }]
 }

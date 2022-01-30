@@ -12,7 +12,8 @@
       :palette="palette"
       v-model:valueNum="valueNum"
       v-model:showIndicator="showIndicator"
-      @on-add-line="addNewLine"></scaleplate>
+      @on-add-line="addNewLine"
+    ></scaleplate>
     <div v-show="isShowReferLine" class="lines">
       <line
         v-for="(v, i) in lines"
@@ -25,7 +26,8 @@
         :is-show-refer-line="isShowReferLine"
         @on-remove="removeLine"
         @on-release="releaseLine"
-        :value="v >> 0"></line>
+        :value="v >> 0"
+      ></line>
     </div>
     <div v-show="showIndicator" class="indicator" :style="indicatorStl">
       <div class="value">{{ valueNum }}</div>
@@ -40,7 +42,7 @@ import Line from '../line/index.vue'
 import Scaleplate from '../scaleplate/index.vue'
 
 export default defineComponent({
-  name: 'CasingRuler',
+  name: 'Casing',
   components: { Line, Scaleplate },
   props: {
     isShowReferLine: {
@@ -86,15 +88,13 @@ export default defineComponent({
     },
     palette: {
       type: Object as PropType<CasingOptions['palette']>,
-      default: () => {
-        return {
-          bgColor: 'rgba(225,225,225, 0)',
-          fontColor: '#7D8694',
-          shadowColor: '#E8E8E8',
-          longfgColor: '#BABBBC',
-          shortfgColor: '#C8CDD0'
-        }
-      }
+      default: () => ({
+        bgColor: 'rgba(225,225,225, 0)',
+        fontColor: '#7D8694',
+        shadowColor: '#E8E8E8',
+        longfgColor: '#BABBBC',
+        shortfgColor: '#C8CDD0'
+      })
     }
   },
   setup(props) {
@@ -113,12 +113,11 @@ export default defineComponent({
           height: `${props.thick! + 1}px`,
           left: `${props.thick}px`
         }
-      } else {
-        return {
-          width: `${props.thick + 1}px`,
-          height: `calc(100% - ${props.thick}px)`,
-          top: `${props.thick}px`
-        }
+      }
+      return {
+        width: `${props.thick + 1}px`,
+        height: `calc(100% - ${props.thick}px)`,
+        top: `${props.thick}px`
       }
     })
 
@@ -129,11 +128,10 @@ export default defineComponent({
           left: `${indicatorOffset}px`,
           borderLeft: `1px solid ${props.lineColor}`
         }
-      } else {
-        return {
-          top: `${indicatorOffset}px`,
-          borderBottom: `1px solid ${props.lineColor}`
-        }
+      }
+      return {
+        top: `${indicatorOffset}px`,
+        borderBottom: `1px solid ${props.lineColor}`
       }
     })
 
@@ -147,7 +145,8 @@ export default defineComponent({
 
     const releaseLine = (value: number, index: number) => {
       const offset = value - props.start
-      const maxOffset =(props.horizontal ? props.width : props.height) / props.scale
+      const maxOffset =
+        (props.horizontal ? props.width : props.height) / props.scale
 
       if (offset < 0 || offset > maxOffset) {
         removeLine(index)
