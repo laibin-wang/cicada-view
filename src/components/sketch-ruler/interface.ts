@@ -13,7 +13,7 @@ export interface RulerOptions {
   height: number
 }
 
-export interface CasingOptions {
+export interface WrapperOptions {
   scale: number
   ratio: number
   width: number
@@ -26,6 +26,18 @@ export interface CasingOptions {
   shadowWidth: number
   isShowReferLine: boolean
   lines: Array<number>
+}
+
+export interface ShadowType {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+export interface lineType {
+  h: Array<number>
+  v: Array<number>
 }
 
 export interface CanvasRulerOptions {

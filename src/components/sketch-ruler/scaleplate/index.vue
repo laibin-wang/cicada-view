@@ -50,13 +50,15 @@ export default defineComponent({
     },
     palette: {
       type: Object as PropType<PaletteOptions>,
-      default: () => ({
-        bgColor: 'rgba(225,225,225, 0)',
-        fontColor: '#7D8694',
-        shadowColor: '#E8E8E8',
-        longfgColor: '#BABBBC',
-        shortfgColor: '#C8CDD0'
-      })
+      default: () => {
+        return {
+          bgColor: 'rgba(225,225,225, 0)',
+          fontColor: '#7D8694',
+          shadowColor: '#E8E8E8',
+          longfgColor: '#BABBBC',
+          shortfgColor: '#C8CDD0'
+        }
+      }
     }
   },
   emits: ['onAddLine', 'update:showIndicator', 'update:valueNum'],
