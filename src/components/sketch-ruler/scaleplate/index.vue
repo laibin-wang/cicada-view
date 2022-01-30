@@ -14,8 +14,7 @@ import { drawerCanvasRuler } from './utils'
 import { defineComponent, PropType, reactive, ref, onMounted, watch } from 'vue'
 
 export default defineComponent({
-  name: 'CanvasRuler',
-  emits: ['onAddLine', 'update:showIndicator', 'update:valueNum'],
+  name: 'ScaleplateRuler',
   props: {
     showIndicator: Boolean,
     valueNum: Number,
@@ -61,6 +60,7 @@ export default defineComponent({
       }
     }
   },
+  emits: ['onAddLine', 'update:showIndicator', 'update:valueNum'],
   setup(props, { emit }) {
     const state = reactive({
       canvasContext: null as CanvasRenderingContext2D | null

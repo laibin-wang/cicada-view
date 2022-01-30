@@ -1,13 +1,3 @@
-export interface CanvasRulerOptions {
-  ctx: CanvasRenderingContext2D
-  start: number
-  shadowStart: number
-  shadowWidth: number
-  horizontal: boolean
-  palette: PaletteOptions
-  ruler: RulerOptions
-}
-
 export interface PaletteOptions {
   bgColor: string
   fontColor: string
@@ -21,4 +11,29 @@ export interface RulerOptions {
   ratio: number
   width: number
   height: number
+}
+
+export interface CasingOptions {
+  scale: number
+  ratio: number
+  width: number
+  height: number
+  horizontal: boolean
+  palette: PaletteOptions
+  thick: number
+  start: number
+  shadowStart: number
+  shadowWidth: number
+  isShowReferLine: boolean
+  lines: Array<number>
+}
+
+export interface CanvasRulerOptions {
+  ctx: CanvasRenderingContext2D
+  start: number
+  shadowStart: number
+  shadowWidth: number
+  horizontal: boolean
+  palette: PaletteOptions
+  ruler: RulerOptions
 }

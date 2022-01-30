@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import { off } from 'process'
 import { defineComponent, ref, onMounted, computed } from 'vue'
 
 export default defineComponent({
@@ -54,7 +53,7 @@ export default defineComponent({
     const showLine = ref(false)
 
     const setShowLine = (offset: number) => {
-      startV.value = offset >= 0
+      showLine.value = offset >= 0
     }
 
     onMounted(() => {
