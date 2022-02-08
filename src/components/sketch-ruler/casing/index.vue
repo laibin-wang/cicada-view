@@ -1,5 +1,5 @@
 <template>
-  <div style="casing-style">
+  <div class="casing-style">
     <!-- 水平方向 -->
     <wrapper
       :horizontal="true"
@@ -12,7 +12,6 @@
       :lines="lines.h"
       :shadow-start="shadow.x"
       :shadow-width="shadow.width"
-      :scale="scale"
       :palette="palette"></wrapper>
     <!-- 竖直方向 -->
     <wrapper
@@ -26,7 +25,6 @@
       :lines="lines.v"
       :shadow-start="shadow.y"
       :shadow-width="shadow.height"
-      :scale="scale"
       :palette="palette"></wrapper>
 
       <a class="corner" :class="cornerActiveCls" :style="cornerStl" @click="onCornerClick"></a>
@@ -43,11 +41,6 @@ export default defineComponent({
   name: 'Casing',
   components: { Wrapper },
   props: {
-    scale: {
-      type: Number,
-      validator: (value: any) => value > 0,
-      default: 1
-    },
     ratio: {
       type: Number,
       default: 1
@@ -101,7 +94,7 @@ export default defineComponent({
       default: () => {
         return {
           bgColor: 'rgba(225,225,225, 0)',
-          fontColor: '#7D8694',
+          fontColor: '#FFFFFF',
           shadowColor: '#E8E8E8',
           longfgColor: '#BABBBC',
           shortfgColor: '#C8CDD0'
@@ -138,7 +131,7 @@ export default defineComponent({
       showReferLine.value = !showReferLine.value
       emit('onCornerClick', e)
     }
-    
+
     return {
       showReferLine,
       cornerActiveCls,

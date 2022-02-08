@@ -30,11 +30,6 @@ export default defineComponent({
       type: Number,
       default: 0
     },
-    scale: {
-      type: Number,
-      validator: (value: any) => value > 0,
-      default: 1
-    },
     thick: {
       type: Number,
       default: 16
@@ -62,7 +57,7 @@ export default defineComponent({
     })
 
     const offset = computed(() => {
-      const offset = startV.value * props.start * props.scale
+      const offset = startV.value * props.start
       setShowLine(offset)
 
       if (props.horizontal) {
@@ -102,7 +97,7 @@ export default defineComponent({
       const onMove = (e: MouseEvent) => {
         const currentD = props.vertical ? e.clientY : e.clientX
         const newValue = Math.round(
-          initValue + (currentD - startD) / props.scale
+          initValue + (currentD - startD)
         )
         startV.value = newValue
       }

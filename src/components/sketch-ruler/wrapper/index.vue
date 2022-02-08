@@ -2,7 +2,6 @@
   <div :class="rwCls" :style="rwStl">
     <scaleplate
       :horizontal="horizontal"
-      :scale="scale"
       :width="width"
       :height="height"
       :start="start"
@@ -18,7 +17,6 @@
       <line
         v-for="(v, i) in lines"
         :key="v + i"
-        :scale="scale"
         :start="start"
         :thick="thick"
         :palette="palette"
@@ -81,11 +79,6 @@ export default defineComponent({
       type: Number,
       default: 0
     },
-    scale: {
-      type: Number,
-      validator: (value: any) => value > 0,
-      default: 1
-    },
     lineColor: {
       type: String,
       default: '#EB5648'
@@ -132,7 +125,7 @@ export default defineComponent({
     })
 
     const indicatorStl = computed(() => {
-      const indicatorOffset = (valueNum.value - props.start) * props.scale
+      const indicatorOffset = (valueNum.value - props.start)
       if (props.horizontal) {
         return {
           left: `${indicatorOffset}px`,
@@ -155,8 +148,7 @@ export default defineComponent({
 
     const releaseLine = (value: number, index: number) => {
       const offset = value - props.start
-      const maxOffset =
-        (props.horizontal ? props.width : props.height) / props.scale
+      const maxOffset = props.horizontal ? props.width : props.height
 
       if (offset < 0 || offset > maxOffset) {
         removeLine(index)

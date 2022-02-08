@@ -1,6 +1,6 @@
 <template>
   <canvas
-    ref="$canvas"
+    ref="canvas"
     class="scaleplate"
     @click="handle($event, 'click')"
     @mouseenter="handle($event, 'enter')"
@@ -19,10 +19,6 @@ export default defineComponent({
   props: {
     showIndicator: Boolean,
     valueNum: Number,
-    scale: {
-      type: Number,
-      default: 1
-    },
     ratio: Number,
     width: {
       type: Number,
@@ -66,17 +62,17 @@ export default defineComponent({
     const state = reactive({
       canvasContext: null as CanvasRenderingContext2D | null
     })
-    const $canvas = ref<HTMLCanvasElement | null>(null)
+    const canvas = ref<HTMLCanvasElement | null>(null)
     let ratio = 1
 
     const initCanvasRef = () => {
-      state.canvasContext = $canvas.value && $canvas.value.getContext('2d')
+      state.canvasContext = canvas.value && canvas.value.getContext('2d')
     }
 
     const updateCanvasContext = (ratio: number) => {
-      if ($canvas.value) {
-        $canvas.value.width = props.width * ratio
-        $canvas.value.height = props.height * ratio
+      if (canvas.value) {
+        canvas.value.width = props.width * ratio
+        canvas.value.height = props.height * ratio
         const ctx = state.canvasContext
         if (ctx) {
           ctx.font = `${
@@ -90,7 +86,6 @@ export default defineComponent({
 
     const drawRuler = (ratio: number) => {
       const ruler: RulerOptions = {
-        scale: props.scale,
         ratio,
         width: props.width,
         height: props.height
@@ -128,10 +123,10 @@ export default defineComponent({
     })
 
     const handle = (e: MouseEvent, key: string) => {
-      const getValueByOffset = (offset: number, start: number, scale: number) =>
-        Math.round(start + offset / scale)
+      const getValueByOffset = (offset: number, start: number) =>
+        Math.round(start + offset)
       const offset = props.horizontal ? e.offsetX : e.offsetY
-      const value = getValueByOffset(offset, props.start, props.scale)
+      const value = getValueByOffset(offset, props.start)
 
       switch (key) {
         case 'click':
@@ -149,7 +144,7 @@ export default defineComponent({
 
     return {
       handle,
-      $canvas
+      canvas
     }
   }
 })
