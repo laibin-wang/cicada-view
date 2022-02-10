@@ -89,6 +89,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    cornerActive: {
+      type: Boolean,
+      default: false
+    },
     palette: {
       type: Object as PropType<PaletteOptions>,
       default: () => {
@@ -100,11 +104,7 @@ export default defineComponent({
           shortfgColor: '#C8CDD0'
         }
       }
-    },
-    cornerActive: {
-      type: Boolean,
-      default: false
-    },
+    }
   },
   emits: ['onCornerClick', 'handleLine'],
   setup(props, { emit }) {
@@ -142,7 +142,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .casing-style {
   position: absolute;
   z-index: 3;
@@ -172,7 +172,7 @@ export default defineComponent({
     background: white;
   }
 }
-.ruler {
+.scaleplate {
   width: 100%;
   height: 100%;
   pointer-events: auto;

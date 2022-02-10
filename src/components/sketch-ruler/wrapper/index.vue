@@ -14,18 +14,18 @@
       @on-add-line="addNewLine"
     ></scaleplate>
     <div v-show="isShowReferLine" class="lines">
-      <line
+      <Line
         v-for="(v, i) in lines"
         :key="v + i"
+        :index="i"
+        :value="v >> 0"
         :start="start"
         :thick="thick"
-        :palette="palette"
         :horizontal="horizontal"
         :is-show-refer-line="isShowReferLine"
         @on-remove="removeLine"
         @on-release="releaseLine"
-        :value="v >> 0"
-      ></line>
+      ></Line>
     </div>
     <div v-show="showIndicator" class="indicator" :style="indicatorStl">
       <div class="value">{{ valueNum }}</div>
@@ -112,14 +112,14 @@ export default defineComponent({
     const rwStl = computed(() => {
       if (props.horizontal) {
         return {
-          width: `calc(100% - ${props.thick}px)`,
-          height: `${props.thick! + 1}px`,
+          width: `${props.width}px`,  // `calc(100% - ${props.thick}px)`,
+          height: `${props.thick + 1}px`,
           left: `${props.thick}px`
         }
       }
       return {
         width: `${props.thick + 1}px`,
-        height: `calc(100% - ${props.thick}px)`,
+        height: `${props.height}px`, // `calc(100% - ${props.thick}px)`,
         top: `${props.thick}px`
       }
     })
@@ -171,7 +171,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .line {
   position: absolute;
 }

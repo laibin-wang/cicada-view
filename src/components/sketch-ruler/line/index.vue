@@ -38,6 +38,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    isShowReferLine: {
+      type: Boolean,
+      default: false
+    },
     lineColor: {
       type: String,
       default: '#EB5648'
@@ -46,7 +50,7 @@ export default defineComponent({
   emits: ['onMouseDown', 'onRelease', 'onRemove'],
   setup(props, { emit }) {
     const startV = ref(0)
-    const showLine = ref(false)
+    const showLine = ref(true)
 
     const setShowLine = (offset: number) => {
       showLine.value = offset >= 0
@@ -57,13 +61,14 @@ export default defineComponent({
     })
 
     const offset = computed(() => {
-      const offset = startV.value * props.start
+      const offset = startV.value - props.start
       setShowLine(offset)
 
       if (props.horizontal) {
         return { left: `${offset}px` }
+      } else {
+        return { top: `${offset}px` }
       }
-      return { top: `${offset}px` }
     })
 
     const borderCursor = computed(() => {
@@ -95,7 +100,7 @@ export default defineComponent({
       emit('onMouseDown')
 
       const onMove = (e: MouseEvent) => {
-        const currentD = props.vertical ? e.clientY : e.clientX
+        const currentD = props.horizontal ? e.clientX : e.clientY
         const newValue = Math.round(
           initValue + (currentD - startD)
         )
