@@ -7,13 +7,11 @@ export interface PaletteOptions {
 }
 
 export interface RulerOptions {
-  ratio: number
   width: number
   height: number
 }
 
 export interface WrapperOptions {
-  ratio: number
   width: number
   height: number
   horizontal: boolean

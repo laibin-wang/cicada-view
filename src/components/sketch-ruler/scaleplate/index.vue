@@ -19,7 +19,6 @@ export default defineComponent({
   props: {
     showIndicator: Boolean,
     valueNum: Number,
-    ratio: Number,
     width: {
       type: Number,
       default: 0
@@ -63,30 +62,26 @@ export default defineComponent({
       canvasContext: null as CanvasRenderingContext2D | null
     })
     const canvas = ref<HTMLCanvasElement | null>(null)
-    let ratio = 1
 
     const initCanvasRef = () => {
       state.canvasContext = canvas.value && canvas.value.getContext('2d')
     }
 
-    const updateCanvasContext = (ratio: number) => {
+    const updateCanvasContext = () => {
       if (canvas.value) {
-        canvas.value.width = props.width * ratio
-        canvas.value.height = props.height * ratio
+        canvas.value.width = props.width
+        canvas.value.height = props.height
         const ctx = state.canvasContext
         if (ctx) {
-          ctx.font = `${
-            12 * ratio
-          }px -apple-system,"Helvetica Neue", ".SFNSText-Regular", "SF UI Text", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif`
+          ctx.font = `12px -apple-system,"Helvetica Neue", ".SFNSText-Regular", "SF UI Text", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif`
           ctx.lineWidth = 1
           ctx.textBaseline = 'middle'
         }
       }
     }
 
-    const drawRuler = (ratio: number) => {
+    const drawRuler = () => {
       const ruler: RulerOptions = {
-        ratio,
         width: props.width,
         height: props.height
       }
@@ -106,20 +101,19 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      ratio = props.ratio || window.devicePixelRatio || 1
       initCanvasRef()
-      updateCanvasContext(ratio)
-      drawRuler(ratio)
+      updateCanvasContext()
+      drawRuler()
     })
 
     watch(
       () => props.start,
-      () => drawRuler(ratio)
+      () => drawRuler()
     )
 
     watch([() => props.width, () => props.height], () => {
-      updateCanvasContext(ratio)
-      drawRuler(ratio)
+      updateCanvasContext()
+      drawRuler()
     })
 
     const handle = (e: MouseEvent, key: string) => {

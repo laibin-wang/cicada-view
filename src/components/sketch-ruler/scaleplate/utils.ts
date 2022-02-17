@@ -5,10 +5,9 @@ const FONT_SCALE = 0.83
 export const drawerCanvasRuler = (canvasRuler: CanvasRulerOptions) => {
   const { ctx, start, shadowStart, shadowWidth, horizontal, palette, ruler } = canvasRuler
   const { bgColor, fontColor, shadowColor, longfgColor, shortfgColor } = palette
-  const { ratio, width, height } = ruler
+  const { width, height } = ruler
 
   // 缩放 ctx 画布清空
-  ctx.scale(ratio, ratio)
   ctx.clearRect(0, 0, width, height)
 
   // 画刻度尺
@@ -64,8 +63,8 @@ export const drawerCanvasRuler = (canvasRuler: CanvasRulerOptions) => {
     if (!horizontal) {
       ctx.rotate(-Math.PI / 2)
     }
-    ctx.scale(FONT_SCALE / ratio, FONT_SCALE / ratio)
-    ctx.fillText(value.toString(), 4 * ratio, 7 * ratio)
+    ctx.scale(FONT_SCALE, FONT_SCALE)
+    ctx.fillText(value.toString(), 4, 7)
     ctx.restore()
     if (horizontal) {
       ctx.lineTo(x, height)

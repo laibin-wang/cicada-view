@@ -1,18 +1,17 @@
 <template>
   <div :class="rwCls" :style="rwStl">
-    <scaleplate
+    <Scaleplate
       :horizontal="horizontal"
       :width="width"
       :height="height"
       :start="start"
-      :ratio="ratio"
       :shadow-start="shadowStart"
       :shadow-width="shadowWidth"
       :palette="palette"
       v-model:valueNum="valueNum"
       v-model:showIndicator="showIndicator"
       @on-add-line="addNewLine"
-    ></scaleplate>
+    ></Scaleplate>
     <div v-show="isShowReferLine" class="lines">
       <Line
         v-for="(v, i) in lines"
@@ -54,10 +53,6 @@ export default defineComponent({
     thick: {
       type: Number,
       default: 16
-    },
-    ratio: {
-      type: Number,
-      default: 1
     },
     shadowStart: {
       type: Number,
