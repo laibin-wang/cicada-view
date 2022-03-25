@@ -1,49 +1,33 @@
 <template>
   <div class="casing-style">
     <!-- 水平方向 -->
-    <div
-      ref="scrollH"
-      :style="{
-        position: 'relative',
-        width: '100%',
-        height: `${thick}px`,
-        overflow: 'hidden'
-      }">
-      <wrapper
-        :height="thick"
-        :horizontal="true"
-        :is-show-refer-line="showReferLine"
-        :lines="lines.h"
-        :palette="palette"
-        :shadow-start="shadow.x"
-        :shadow-width="shadow.width"
-        :start="startX"
-        :thick="thick"
-        :width="width"
-        @on-line-change="onLineChange" />
-    </div>
+    <wrapper
+      :height="thick"
+      :horizontal="true"
+      :is-show-refer-line="showReferLine"
+      :lines="lines.h"
+      :offset="offsetLeft"
+      :palette="palette"
+      :shadow-start="shadow.x"
+      :shadow-width="shadow.width"
+      :start="startX"
+      :thick="thick"
+      :width="width"
+      @on-line-change="onLineChange" />
     <!-- 竖直方向 -->
-    <div
-      ref="scrollV"
-      :style="{
-        position: 'relative',
-        height: '100%',
-        width: `${thick}px`,
-        overflow: 'hidden'
-      }">
-      <wrapper
-        :height="height"
-        :horizontal="false"
-        :is-show-refer-line="showReferLine"
-        :lines="lines.v"
-        :palette="palette"
-        :shadow-start="shadow.y"
-        :shadow-width="shadow.height"
-        :start="startY"
-        :thick="thick"
-        :width="thick"
-        @on-line-change="onLineChange" />
-    </div>
+    <wrapper
+      :height="height"
+      :horizontal="false"
+      :is-show-refer-line="showReferLine"
+      :lines="lines.v"
+      :offset="offsetTop"
+      :palette="palette"
+      :shadow-start="shadow.y"
+      :shadow-width="shadow.height"
+      :start="startY"
+      :thick="thick"
+      :width="thick"
+      @on-line-change="onLineChange" />
     <div
       class="corner"
       :style="cornerStl">
@@ -137,9 +121,9 @@ export default defineComponent({
   },
   emits: ['onCornerClick', 'lineChang'],
   setup (props, { emit }) {
-    const scrollH = ref(null)
-    const scrollV = ref(null)
     const { lines, isShowReferLine } = toRefs(props)
+    const offsetTop = ref(0)
+    const offsetLeft = ref(0)
 
     const showReferLine = ref(true)
     showReferLine.value = isShowReferLine.value
@@ -168,17 +152,16 @@ export default defineComponent({
     }
 
     const setScroll = (offset: number, horizontal: boolean): void => {
-      if (!scrollH.value) return
       if (horizontal) {
-        scrollH.value.scrollLeft = offset
+        offsetLeft.value = -offset
       } else {
-        scrollV.value.scrollTop = offset
+        offsetTop.value = -offset
       }
     }
 
     return {
-      scrollH,
-      scrollV,
+      offsetLeft,
+      offsetTop,
       setScroll,
       showReferLine,
       cornerActiveCls,
@@ -213,6 +196,7 @@ export default defineComponent({
   transition: all 0.2s ease-in-out;
   border-right: 1px solid rgb(218, 218, 220);
   border-bottom: 1px solid rgb(218, 218, 220);
+  background: #000;
   svg {
     fill: #fff;
   }

@@ -57,6 +57,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    offset: {
+      type: Number,
+      default: 0
+    },
     thick: {
       type: Number,
       default: 16
@@ -116,13 +120,13 @@ export default defineComponent({
         return {
           width: `${props.width}px`, // `calc(100% - ${props.thick}px)`,
           height: `${props.thick + 1}px`,
-          left: `${props.thick}px`
+          left: `${props.thick + props.offset}px`
         }
       }
       return {
         width: `${props.thick + 1}px`,
         height: `${props.height}px`, // `calc(100% - ${props.thick}px)`,
-        top: '0px'
+        top: `${props.thick + props.offset}px`
       }
     })
 
