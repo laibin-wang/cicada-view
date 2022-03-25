@@ -66,7 +66,7 @@ export default defineComponent({
   props: {
     thick: {
       type: Number,
-      default: 16
+      default: 20
     },
     startX: {
       type: Number,

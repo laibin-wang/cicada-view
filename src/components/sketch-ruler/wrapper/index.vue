@@ -63,7 +63,7 @@ export default defineComponent({
     },
     thick: {
       type: Number,
-      default: 16
+      default: 20
     },
     shadowStart: {
       type: Number,

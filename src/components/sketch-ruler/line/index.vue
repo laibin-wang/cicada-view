@@ -1,12 +1,15 @@
 <template>
   <div
-    class="line"
     v-show="showLine"
+    class="line"
     :style="[offset, borderCursor]"
-    @mousedown="handleDown"
-  >
-    <div class="action" :style="actionStyle">
-      <span class="del" @click="handleRemove">&times;</span>
+    @mousedown="handleDown">
+    <div
+      class="action"
+      :style="actionStyle">
+      <span
+        class="del"
+        @click="handleRemove">&times;</span>
       <span class="value">{{ startV }}</span>
     </div>
   </div>
@@ -32,7 +35,7 @@ export default defineComponent({
     },
     thick: {
       type: Number,
-      default: 16
+      default: 20
     },
     horizontal: {
       type: Boolean,
@@ -48,11 +51,11 @@ export default defineComponent({
     }
   },
   emits: ['onMouseDown', 'onRelease', 'onRemove'],
-  setup(props, { emit }) {
+  setup (props, { emit }) {
     const startV = ref(0)
     const showLine = ref(true)
 
-    const setShowLine = (offset: number) => {
+    const setShowLine = (offset: number): void => {
       showLine.value = offset >= 0
     }
 
@@ -93,21 +96,19 @@ export default defineComponent({
       return { left: `${props.thick}px` }
     })
 
-    const handleDown = (e: MouseEvent) => {
+    const handleDown = (e: MouseEvent): void => {
       const startD = props.horizontal ? e.clientX : e.clientY
       const initValue = startV.value
 
       emit('onMouseDown')
 
-      const onMove = (e: MouseEvent) => {
+      const onMove = (e: MouseEvent): void => {
         const currentD = props.horizontal ? e.clientX : e.clientY
-        const newValue = Math.round(
-          initValue + (currentD - startD)
-        )
+        const newValue = Math.round(initValue + (currentD - startD))
         startV.value = newValue
       }
 
-      const onEnd = () => {
+      const onEnd = (): void => {
         emit('onRelease', startV.value, props.index)
         // 移除监听事件 mousemove， mouseup
         document.removeEventListener('mousemove', onMove)
@@ -119,7 +120,7 @@ export default defineComponent({
       document.addEventListener('mouseup', onEnd)
     }
 
-    const handleRemove = () => {
+    const handleRemove = (): void => {
       emit('onRemove', props.index)
     }
 
