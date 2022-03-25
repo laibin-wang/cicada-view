@@ -28,13 +28,14 @@
   },
   "homepage": "https://github.com/laibin-wang/cicada-view#readme",
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,vue}": [
-      "eslint --fix",
+    "*.{js,ts,jsx,tsx,vue,css}": [
       "prettier --write"
     ],
+    "*.{js,ts,jsx,tsx,vue}": [
+      "eslint --fix"
+    ],
     "*.{css}": [
-      "stylelint --fix",
-      "prettier --write"
+      "stylelint --fix"
     ]
   },
   "config": {
@@ -47,7 +48,7 @@
     "vue-router": "4"
   },
   "devDependencies": {
-    "@cicada-design/eslint-config": "^0.0.2",
+    "@cicada-design/eslint-config": "^0.1.2",
     "@cicada-design/stylelint-config": "^0.0.2",
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",

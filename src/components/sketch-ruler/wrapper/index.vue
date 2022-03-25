@@ -1,39 +1,46 @@
 <template>
-  <div :class="rwCls" :style="rwStl">
+  <div
+    :class="rwCls"
+    :style="rwStl">
     <Scaleplate
-      :horizontal="horizontal"
-      :width="width"
+      v-model:showIndicator="showIndicator"
+      v-model:valueNum="valueNum"
       :height="height"
-      :start="start"
+      :horizontal="horizontal"
+      :palette="palette"
       :shadow-start="shadowStart"
       :shadow-width="shadowWidth"
-      :palette="palette"
-      v-model:valueNum="valueNum"
-      v-model:showIndicator="showIndicator"
-      @on-add-line="addNewLine"
-    ></Scaleplate>
-    <div v-show="isShowReferLine" class="lines">
+      :start="start"
+      :width="width"
+      @on-add-line="addNewLine" />
+    <div
+      v-show="isShowReferLine"
+      class="lines">
       <Line
         v-for="(v, i) in lines"
         :key="v + i"
+        :horizontal="horizontal"
         :index="i"
-        :value="v >> 0"
+        :is-show-refer-line="isShowReferLine"
         :start="start"
         :thick="thick"
-        :horizontal="horizontal"
-        :is-show-refer-line="isShowReferLine"
-        @on-remove="removeLine"
+        :value="v >> 0"
         @on-release="releaseLine"
-      ></Line>
+        @on-remove="removeLine" />
     </div>
-    <div v-show="showIndicator" class="indicator" :style="indicatorStl">
-      <div class="value">{{ valueNum }}</div>
+    <div
+      v-show="showIndicator"
+      class="indicator"
+      :style="indicatorStl">
+      <div class="value">
+        {{ valueNum }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref } from 'vue'
+import { defineComponent, PropType, computed, ref, toRefs } from 'vue'
 import { WrapperOptions } from '../interface'
 import Line from '../line/index.vue'
 import Scaleplate from '../scaleplate/index.vue'
@@ -84,20 +91,20 @@ export default defineComponent({
     },
     palette: {
       type: Object as PropType<WrapperOptions['palette']>,
-      default: () => {
-        return {
-          bgColor: 'rgba(225,225,225, 0)',
-          fontColor: '#7D8694',
-          shadowColor: '#E8E8E8',
-          longfgColor: '#BABBBC',
-          shortfgColor: '#C8CDD0'
-        }
-      }
+      default: () => ({
+        bgColor: 'rgba(225,225,225, 0)',
+        fontColor: '#7D8694',
+        shadowColor: '#E8E8E8',
+        longfgColor: '#BABBBC',
+        shortfgColor: '#C8CDD0'
+      })
     }
   },
-  setup(props) {
+  emits: ['onLineChange'],
+  setup (props, { emit }) {
     const showIndicator = ref(false)
     const valueNum = ref(0)
+    const { lines } = toRefs(props)
 
     const rwCls = computed(() => {
       const clsName = props.horizontal ? 'h-wrapper' : 'v-wrapper'
@@ -107,7 +114,7 @@ export default defineComponent({
     const rwStl = computed(() => {
       if (props.horizontal) {
         return {
-          width: `${props.width}px`,  // `calc(100% - ${props.thick}px)`,
+          width: `${props.width}px`, // `calc(100% - ${props.thick}px)`,
           height: `${props.thick + 1}px`,
           left: `${props.thick}px`
         }
@@ -115,12 +122,12 @@ export default defineComponent({
       return {
         width: `${props.thick + 1}px`,
         height: `${props.height}px`, // `calc(100% - ${props.thick}px)`,
-        top: `${props.thick}px`
+        top: '0px'
       }
     })
 
     const indicatorStl = computed(() => {
-      const indicatorOffset = (valueNum.value - props.start)
+      const indicatorOffset = valueNum.value - props.start
       if (props.horizontal) {
         return {
           left: `${indicatorOffset}px`,
@@ -133,22 +140,25 @@ export default defineComponent({
       }
     })
 
-    const addNewLine = (value: number) => {
-      props.lines.push(value)
+    const addNewLine = (value: number): void => {
+      lines.value.push(value)
+      emit('onLineChange', lines.value, props.horizontal)
     }
 
-    const removeLine = (index: number) => {
-      props.lines.splice(index, 1)
+    const removeLine = (index: number): void => {
+      lines.value.splice(index, 1)
+      emit('onLineChange', lines.value, props.horizontal)
     }
 
-    const releaseLine = (value: number, index: number) => {
+    const releaseLine = (value: number, index: number): void => {
       const offset = value - props.start
       const maxOffset = props.horizontal ? props.width : props.height
 
       if (offset < 0 || offset > maxOffset) {
         removeLine(index)
       } else {
-        props.lines[index] = value
+        lines.value[index] = value
+        emit('onLineChange', lines.value, props.horizontal)
       }
     }
 

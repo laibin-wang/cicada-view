@@ -31,7 +31,7 @@ export interface ShadowType {
   height: number
 }
 
-export interface lineType {
+export interface linesType {
   h: Array<number>
   v: Array<number>
 }
