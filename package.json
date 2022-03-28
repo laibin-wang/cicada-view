@@ -31,12 +31,12 @@
     "*.{js,ts,jsx,tsx,vue}": [
       "prettier --write",
       "eslint --fix",
-      "git add"
+      "git add ."
     ],
-    "*.{css}": [
+    "*.{css},!src/assets/**": [
       "prettier --write",
       "stylelint --fix",
-      "git add"
+      "git add ."
     ]
   },
   "config": {

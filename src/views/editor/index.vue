@@ -42,6 +42,7 @@
             </div>
           </div>
         </div>
+        <Setting />
       </div>
     </div>
   </div>
@@ -52,10 +53,11 @@ import { defineComponent, ref } from 'vue'
 import SketchRuler from '@/components/sketch-ruler/index'
 import { linesType } from '@/components/sketch-ruler/interface'
 import IconSvg from '@/components/icon-svg/index.vue'
+import Setting from './setting.vue'
 
 export default defineComponent({
   name: 'Editor',
-  components: { SketchRuler, IconSvg },
+  components: { SketchRuler, IconSvg, Setting },
   setup () {
     const refSketch = ref(null)
     const lines = ref({})
@@ -148,6 +150,7 @@ export default defineComponent({
     overflow: hidden;
     width: 100%;
     height: 100%;
+    display: flex;
   }
   .section-box {
     position: relative;

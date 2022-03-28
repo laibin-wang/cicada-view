@@ -1,4 +1,4 @@
-@import '_var.css';
+@import "_var.css";
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -18,7 +18,11 @@
 body {
   background: #171b22;
   overflow: hidden;
-  font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial,
+  font-family:
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Helvetica Neue",
+    Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -36,7 +40,8 @@ html {
 }
 
 .loader-txt {
-  background: #1d39c4 -webkit-linear-gradient(
+  background:
+    #1d39c4 -webkit-linear-gradient(
       left,
       #1d39c4,
       #a64316 30%,
@@ -44,10 +49,20 @@ html {
       #842900
     ) no-repeat 0 0;
   background-size: 20% 100%;
-  background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: underline;
   animation: slide-shine 2s linear infinite;
+}
+
+@-webkit-keyframes slide-shine {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 @keyframes slide-shine {
