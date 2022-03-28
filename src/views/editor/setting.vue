@@ -1,12 +1,7 @@
 <template>
-  <div
-    class="setting"
-    :class="show ? 'active' : ''">
-    <IconSvg
-      class="btn"
-      name="shuangjiantou"
-      @click="handleDradwer" />
-    <div>aaa</div>
+  <div class="setting" :class="show ? 'active' : ''">
+    <IconSvg class="btn" name="shuangjiantou" @click="handleDradwer" />
+    <div>aaasss</div>
   </div>
 </template>
 
@@ -17,7 +12,7 @@ import IconSvg from '@/components/icon-svg/index.vue'
 export default defineComponent({
   name: 'Editor',
   components: { IconSvg },
-  setup () {
+  setup() {
     const show = ref(false)
     const handleDradwer = (): void => {
       show.value = !show.value

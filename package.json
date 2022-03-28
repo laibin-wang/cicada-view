@@ -29,13 +29,13 @@
   "homepage": "https://github.com/laibin-wang/cicada-view#readme",
   "lint-staged": {
     "*.{js,ts,jsx,tsx,vue}": [
-      "prettier --write",
       "eslint --fix",
+      "prettier --write",
       "git add ."
     ],
     "*.{css},!src/assets/**": [
-      "prettier --write",
       "stylelint --fix",
+      "prettier --write",
       "git add ."
     ]
   },
