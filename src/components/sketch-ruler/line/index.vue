@@ -47,7 +47,7 @@ export default defineComponent({
     },
     lineColor: {
       type: String,
-      default: '#EB5648'
+      default: '#1d39c4'
     }
   },
   emits: ['onMouseDown', 'onRelease', 'onRemove'],
@@ -149,12 +149,14 @@ export default defineComponent({
   }
   .value {
     pointer-events: none;
-    transform: scale(0.83);
+    transform: scale(0.9);
+    color: #fff;
   }
   .del {
     padding: 3px 5px;
     cursor: pointer;
     visibility: hidden;
+    color: #eb2f96;
   }
   &:hover .del {
     visibility: visible;

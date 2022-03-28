@@ -28,14 +28,15 @@
   },
   "homepage": "https://github.com/laibin-wang/cicada-view#readme",
   "lint-staged": {
-    "*.{js,ts,jsx,tsx,vue,css}": [
-      "prettier --write"
-    ],
     "*.{js,ts,jsx,tsx,vue}": [
-      "eslint --fix"
+      "prettier --write",
+      "eslint --fix",
+      "git add"
     ],
     "*.{css}": [
-      "stylelint --fix"
+      "prettier --write",
+      "stylelint --fix",
+      "git add"
     ]
   },
   "config": {

@@ -59,13 +59,13 @@ export const drawerCanvasRuler = (canvasRuler: CanvasRulerOptions): void => {
         ctx.translate(width * 0.4, x)
         ctx.rotate(-Math.PI / 2)
       }
-
-      ctx.fillText(value.toString(), 4, 7)
+      ctx.scale(0.9, 0.9)
+      ctx.fillText(value.toString(), 4, 8)
       ctx.restore()
       if (horizontal) {
         ctx.lineTo(x, height)
       } else {
-        ctx.lineTo((width * 9) / 16, x)
+        ctx.lineTo(width, x)
       }
     }
   }
@@ -84,12 +84,12 @@ export const drawerCanvasRuler = (canvasRuler: CanvasRulerOptions): void => {
     if (horizontal) {
       ctx.moveTo(x, 0)
       if (value % (gridSize5 * 2) !== 0) {
-        ctx.lineTo(x, (height * 1) / 4)
+        ctx.lineTo(x, (height * 1) / 2.5)
       }
     } else {
       ctx.moveTo(0, x)
       if (value % (gridSize5 * 2) !== 0) {
-        ctx.lineTo((width * 1) / 4, x)
+        ctx.lineTo((width * 1) / 2.5, x)
       }
     }
   }

@@ -114,8 +114,8 @@ export default defineComponent({
         bgColor: 'rgba(225,225,225, 0)',
         fontColor: '#FFFFFF',
         shadowColor: '#E8E8E8',
-        longfgColor: '#BABBBC',
-        shortfgColor: '#C8CDD0'
+        longfgColor: '#FFFFFF',
+        shortfgColor: '#FFFFFF'
       })
     }
   },
@@ -144,18 +144,18 @@ export default defineComponent({
 
     const onLineChange = (ary: Array<number>, horizontal: boolean): void => {
       if (horizontal) {
-        lines.h = [...ary]
+        lines.value.h = [...ary]
       } else {
-        lines.v = [...ary]
+        lines.value.v = [...ary]
       }
-      emit('lineChang', lines)
+      emit('lineChang', lines.value)
     }
 
     const setScroll = (offset: number, horizontal: boolean): void => {
       if (horizontal) {
-        offsetLeft.value = -offset
+        offsetLeft.value = offset
       } else {
-        offsetTop.value = -offset
+        offsetTop.value = offset
       }
     }
 

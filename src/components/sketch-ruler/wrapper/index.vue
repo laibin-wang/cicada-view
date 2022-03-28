@@ -98,9 +98,9 @@ export default defineComponent({
       default: () => ({
         bgColor: 'rgba(225,225,225, 0)',
         fontColor: '#7D8694',
-        shadowColor: '#E8E8E8',
+        shadowColor: '#FFFFF',
         longfgColor: '#BABBBC',
-        shortfgColor: '#C8CDD0'
+        shortfgColor: '#FFFFF'
       })
     }
   },
@@ -120,13 +120,13 @@ export default defineComponent({
         return {
           width: `${props.width}px`, // `calc(100% - ${props.thick}px)`,
           height: `${props.thick + 1}px`,
-          left: `${props.thick + props.offset}px`
+          left: `${props.thick - props.offset}px`
         }
       }
       return {
         width: `${props.thick + 1}px`,
         height: `${props.height}px`, // `calc(100% - ${props.thick}px)`,
-        top: `${props.thick + props.offset}px`
+        top: `${props.thick - props.offset}px`
       }
     })
 
@@ -135,12 +135,12 @@ export default defineComponent({
       if (props.horizontal) {
         return {
           left: `${indicatorOffset}px`,
-          borderLeft: `1px solid ${props.lineColor}`
+          borderLeft: `1px dashed ${props.lineColor}`
         }
       }
       return {
         top: `${indicatorOffset}px`,
-        borderBottom: `1px solid ${props.lineColor}`
+        borderBottom: `1px dashed ${props.lineColor}`
       }
     })
 

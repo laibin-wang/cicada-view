@@ -36,8 +36,10 @@
           @wheel="handleWheel">
           <div
             class="screen"
-            :style="{ width: `${viewW}px`, height: `${viewH}px` }">
-            {{ lines }}
+            :style="{ width: `${viewW - 45}px`, height: `${viewH - 45}px` }">
+            <div class="content">
+              {{ lines }}
+            </div>
           </div>
         </div>
       </div>
@@ -47,8 +49,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { linesType } from '@/components/sketch-ruler/interface'
 import SketchRuler from '@/components/sketch-ruler/index'
+import { linesType } from '@/components/sketch-ruler/interface'
 import IconSvg from '@/components/icon-svg/index.vue'
 
 export default defineComponent({
@@ -56,7 +58,7 @@ export default defineComponent({
   components: { SketchRuler, IconSvg },
   setup () {
     const refSketch = ref(null)
-    const lines: linesType = ref({})
+    const lines = ref({})
     const viewH = 3000
     const viewW = 5000
 
@@ -148,9 +150,13 @@ export default defineComponent({
   }
   .section-box {
     position: relative;
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 45px);
+    width: calc(100% - 45px);
+    padding: 45px 0 0 45px;
     overflow: auto;
+    .screen {
+      background: url(@/assets/images/14-14.png) repeat;
+    }
   }
 }
 </style>
