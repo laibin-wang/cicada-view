@@ -3,7 +3,7 @@
     <div class="head">
       <div class="head-left">
         <icon-svg />
-        <span>Cicada View</span>
+        <span class="loader-txt">Cicada View</span>
       </div>
       <div class="head-middle">
         <span>大屏测试</span>
@@ -113,7 +113,8 @@ export default defineComponent({
     }
     span {
       color: #fff;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: bold;
     }
     &-middle {
       position: relative;
