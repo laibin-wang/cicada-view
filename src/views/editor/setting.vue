@@ -1,7 +1,16 @@
 <template>
   <div class="setting" :class="show ? 'active' : ''">
     <IconSvg class="btn" name="shuangjiantou" @click="handleDradwer" />
-    <div>aaasss</div>
+    <div class="content">
+      <div class="tab-head">
+        <template v-for="item in tabs" :key="item.id">
+          <div :class="tabInx === item.id ? 'active' : ''" @click="tabClick(item.id)">
+            <IconSvg :name="item.icon" />
+            <span>{{ item.label }}</span>
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,13 +23,39 @@ export default defineComponent({
   components: { IconSvg },
   setup() {
     const show = ref(false)
+    const tabInx = ref(1)
+    const tabs = [
+      {
+        id: 1,
+        label: '配置',
+        icon: 'canshushezhi'
+      },
+      {
+        id: 2,
+        label: '数据',
+        icon: 'relation-analysis-full'
+      },
+      {
+        id: 3,
+        label: '参数',
+        icon: 'navicon-zdcs'
+      }
+    ]
+
     const handleDradwer = (): void => {
       show.value = !show.value
     }
 
+    const tabClick = (inx: number): void => {
+      tabInx.value = inx
+    }
+
     return {
       show,
-      handleDradwer
+      tabInx,
+      tabs,
+      handleDradwer,
+      tabClick
     }
   }
 })
@@ -51,6 +86,36 @@ export default defineComponent({
     border-radius: 12px 0;
     &:hover {
       fill: var(--color-primary);
+    }
+  }
+  .content {
+    position: relative;
+  }
+  .tab-head {
+    display: flex;
+    height: 40px;
+    color: #fff;
+    background-color: #141414;
+    font-size: 12px;
+    & > div {
+      flex: 1 1;
+      line-height: 40px;
+      text-align: center;
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+    }
+    .active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+      .cicada__icon {
+        fill: var(--color-primary);
+      }
+    }
+    .cicada__icon {
+      width: 17px;
+      height: 17px;
+      vertical-align: middle;
+      margin-right: 5px;
     }
   }
 }
