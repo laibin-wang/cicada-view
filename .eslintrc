@@ -2,12 +2,15 @@
   "root": true,
   "extends": ["@cicada-design/eslint-config"],
   "rules": {
-    "prefer-object-spread": "off"
+    "prefer-object-spread": "off",
+    "vue/multi-word-component-names": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "warn"
   },
   "overrides": [{
     "files": ["src/**/*.vue"],
     "rules": {
-      "vue/multi-word-component-names": "off",
+      "vue/multi-word-component-names": "off"
     }
   }]
 }

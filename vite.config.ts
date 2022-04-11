@@ -6,7 +6,7 @@ import postcssImport from 'postcss-import'
 import postcssUrl from 'postcss-url'
 import nested from 'postcss-nested'
 
-function pathResolve(dir: string) {
+function pathResolve(dir: string): string {
   return resolve(process.cwd(), '.', dir)
 }
 
