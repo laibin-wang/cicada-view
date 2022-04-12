@@ -1,0 +1,93 @@
+.vdr-container{
+  touch-action: none;
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px dashed transparent;
+  z-index: auto;
+  user-select: auto;
+  width: auto;
+  height: auto;
+}
+.vdr-container.active {
+  border-color: var(--color-primary, #2f54eb);
+  border-style: dashed;
+}
+.vdr-container.dragging {
+  border-color: var(--color-primary, #2f54eb);
+  border-style: solid;
+}
+.vdr-handle {
+  background: #fff;
+  border: 2px solid var(--color-primary, #2f54eb);
+  border-radius: 50%;
+  cursor: n-resize;
+  height: 7px;
+  pointer-events: auto;
+  position: absolute;
+  width: 7px;
+}
+.vdr-handle-tl {
+  cursor: nwse-resize;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+.vdr-handle-mr {
+  cursor: ew-resize;
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+.vdr-handle-ml {
+  cursor: ew-resize;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.vdr-handle-tr {
+  cursor: nesw-resize;
+  right: 0;
+  top: 0;
+  transform: translate(50%, -50%);
+}
+.vdr-handle-bl {
+  bottom: 0;
+  cursor: nesw-resize;
+  left: 0;
+  transform: translate(-50%, 50%);
+}
+.vdr-handle-br {
+  bottom: 0;
+  cursor: nwse-resize;
+  right: 0;
+  transform: translate(50%, 50%);
+}
+.vdr-handle-tm {
+  cursor: n-resize;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+}
+.vdr-handle-bm {
+  cursor: s-resize;
+  right: 50%;
+  bottom: 0;
+  transform: translate(50%, 50%);
+}
+.vdr-rotator {
+  cursor: url('./rotate-icon.svg'), ew-resize;
+  left: 50%;
+  pointer-events: auto;
+  top: 0;
+  transform: translateX(-50%) translateY(calc(-100% - 15px));
+  user-select: none;
+  background-image: url('./rotate.svg');
+  background-position: 4px 4px;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  border: 2px solid var(--color-primary, #2f54eb);
+  border-radius: 50%;
+  height: 30px;
+  position: absolute;
+  width: 30px;
+}

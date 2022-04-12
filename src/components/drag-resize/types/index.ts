@@ -41,3 +41,5 @@ export type ParentSize = ReturnType<typeof initParent>
 export type ReferenceLineMap = Record<'col' | 'row', { [propName: number]: Record<'min' | 'max' | 'value', number> }>
 
 export type HandleEvent = MouseEvent | TouchEvent
+
+export type TriggerKey = 'left' | 'right'

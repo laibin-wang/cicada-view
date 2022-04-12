@@ -1,5 +1,5 @@
 import { defineComponent, ref, toRef, h, Ref, inject } from 'vue'
-import { ResizingHandle, ContainerProvider, UpdatePosition, GetPositionStore, SetMatchedLine } from '../type'
+import { ResizingHandle, ContainerProvider, UpdatePosition, GetPositionStore, SetMatchedLine } from '../types'
 import { filterHandles, IDENTITY, getElSize } from '../utils'
 import {
   initState,
@@ -10,6 +10,8 @@ import {
   initResizeHandle,
   watchProps
 } from '../hooks'
+
+import './common.css'
 
 export const ALL_HANDLES: ResizingHandle[] = ['tl', 'tm', 'tr', 'ml', 'mr', 'bl', 'bm', 'br']
 
@@ -129,9 +131,21 @@ export const VdrProps = {
     type: Boolean,
     default: false
   },
-  onChange: {
-    type: Function,
-    default: null
+  parentScaleX: {
+    type: Number,
+    default: 1
+  },
+  parentScaleY: {
+    type: Number,
+    default: 1
+  },
+  triggerKey: {
+    type: String,
+    default: 'left'
+    // },
+    // onChange: {
+    //   type: Function,
+    //   default: null
   }
 }
 
@@ -247,6 +261,7 @@ const VueResizable = defineComponent({
       const handleClass = ['vdr-handle', `vdr-handle-${item}`, this.classNameHandle, `${this.classNameHandle}-${item}`]
       return h('div', {
         class: handleClass,
+        style: { display: this.enable ? 'block' : 'none' },
         onMousedown: (e: MouseEvent) => this.resizeHandleDown(e, item),
         onTouchstart: (e: TouchEvent) => this.resizeHandleDown(e, item)
       })
@@ -256,19 +271,18 @@ const VueResizable = defineComponent({
       'div',
       {
         ref: 'containerRef',
-        class: `vdr-container ${this.klass}`,
+        class: ['vdr-container', this.klass],
         style: this.style
       },
       [
         this.$slots.default && this.$slots.default(),
-        this.enable && handlers,
-        this.rotatable &&
-          this.enable &&
-          h('div', {
-            class: `vdr-rotator ${this.classNameRotator}`,
-            onMousedown: (e: MouseEvent) => this.rotateHandle(e),
-            onTouchstart: (e: TouchEvent) => this.rotateHandle(e)
-          })
+        ...handlers,
+        h('div', {
+          style: { display: this.rotatable && this.enable ? 'block' : 'none' },
+          class: `vdr-rotator ${this.classNameRotator}`,
+          onMousedown: (e: MouseEvent) => this.rotateHandle(e),
+          onTouchstart: (e: TouchEvent) => this.rotateHandle(e)
+        })
       ]
     )
   }

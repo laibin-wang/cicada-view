@@ -1,7 +1,7 @@
-import { onMounted, onUnmounted, ref, watch, Ref, computed, ExtractPropTypes } from 'vue'
-import { VdrProps } from '../core/resizable'
-import { ResizingHandle, HandleEvent, ContainerProvider, ReferenceLineMap, MatchedLine } from '../type'
+import { onMounted, onUnmounted, ref, watch, Ref, computed } from 'vue'
+
 import { getId, getElSize, getReferenceLineMap, removeEvent, addEvent, filterHandles, calcAngle } from '../utils'
+import { ResizingHandle, HandleEvent, ContainerProvider, ReferenceLineMap, MatchedLine, TriggerKey } from '../types'
 
 export function useState<T>(initialState: T): [Ref<T>, (value: T) => T] {
   const state = ref(initialState) as Ref<T>
@@ -12,11 +12,11 @@ export function useState<T>(initialState: T): [Ref<T>, (value: T) => T] {
   return [state, setState]
 }
 
-export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
-  const [width, setWidthFunc] = useState<number>(props.initW)
-  const [height, setHeightFunc] = useState<number>(props.initH)
-  const [left, setLeftFunc] = useState<number>(props.x)
-  const [top, setTopFunc] = useState<number>(props.y)
+export function initState(props: any, emit: any) {
+  const [width, setWidth] = useState<number>(props.initW)
+  const [height, setHeight] = useState<number>(props.initH)
+  const [left, setLeft] = useState<number>(props.x)
+  const [top, setTop] = useState<number>(props.y)
   const [zIndex, setZIndex] = useState<number>(props.z)
   const [rotate, setRotate] = useState<number>(props.r)
   const [enable, setEnable] = useState<boolean>(props.active)
@@ -28,6 +28,10 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
   const [resizingMaxHeight, setResizingMaxHeight] = useState<number>(Infinity)
   const [resizingMinWidth, setResizingMinWidth] = useState<number>(props.minW)
   const [resizingMinHeight, setResizingMinHeight] = useState<number>(props.minH)
+  const [parentScaleX, setParentScaleX] = useState<number>(props.parentScaleX)
+  const [parentScaleY, setParentScaleY] = useState<number>(props.parentScaleY)
+  const [triggerKey, setTriggerKey] = useState<TriggerKey>(props.triggerKey)
+
   const aspectRatio = computed(() => height.value / width.value)
 
   watch(
@@ -70,23 +74,40 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
     { immediate: true }
   )
 
-  watch(
-    enable,
-    (newVal, oldVal) => {
-      emit('update:active', newVal)
-      if (!oldVal && newVal) {
-        emit('activated')
-      } else if (oldVal && !newVal) {
-        emit('deactivated')
-      }
-    },
-    { immediate: true }
-  )
+  watch(enable, (newVal, oldVal) => {
+    emit('update:active', newVal)
+    if (!oldVal && newVal) {
+      emit('activated')
+    } else if (oldVal && !newVal) {
+      emit('deactivated')
+    }
+  })
 
   watch(
     () => props.active,
     (newVal: boolean) => {
       setEnable(newVal)
+    }
+  )
+
+  watch(
+    () => props.parentScaleX,
+    () => {
+      setParentScaleX(props.parentScaleX)
+    }
+  )
+
+  watch(
+    () => props.parentScaleY,
+    () => {
+      setParentScaleY(props.parentScaleY)
+    }
+  )
+
+  watch(
+    () => props.triggerKey,
+    () => {
+      setTriggerKey(props.triggerKey)
     }
   )
 
@@ -108,6 +129,9 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
     resizingMinWidth,
     resizingMinHeight,
     aspectRatio,
+    parentScaleX,
+    parentScaleY,
+    triggerKey,
     setEnable,
     setDragging,
     setResizing,
@@ -119,10 +143,10 @@ export function initState(props: ExtractPropTypes<typeof VdrProps>, emit: any) {
     setResizingMinHeight,
     setRotate,
     setZIndex,
-    setWidth: (val: number) => setWidthFunc(Math.floor(val)),
-    setHeight: (val: number) => setHeightFunc(Math.floor(val)),
-    setTop: (val: number) => setTopFunc(Math.floor(val)),
-    setLeft: (val: number) => setLeftFunc(Math.floor(val))
+    $setWidth: (val: number) => setWidth(Math.floor(val)),
+    $setHeight: (val: number) => setHeight(Math.floor(val)),
+    $setTop: (val: number) => setTop(Math.floor(val)),
+    $setLeft: (val: number) => setLeft(Math.floor(val))
   }
 }
 
@@ -148,7 +172,7 @@ export function initLimitSizeAndMethods(
 ) {
   const { width, height, left, top, rotate, resizingMaxWidth, resizingMaxHeight, resizingMinHeight, resizingMinWidth } =
     containerProps
-  const { setWidth, setHeight, setTop, setLeft, setRotate } = containerProps
+  const { $setWidth, $setHeight, $setTop, $setLeft, setRotate } = containerProps
   const { parentWidth, parentHeight } = parentSize
 
   const limitProps = {
@@ -191,25 +215,25 @@ export function initLimitSizeAndMethods(
       if (props.disabledW) {
         return width.value
       }
-      return setWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)))
+      return $setWidth(Math.min(limitProps.maxWidth.value, Math.max(limitProps.minWidth.value, val)))
     },
     setHeight(val: number) {
       if (props.disabledH) {
         return height.value
       }
-      return setHeight(Math.min(limitProps.maxHeight.value, Math.max(limitProps.minHeight.value, val)))
+      return $setHeight(Math.min(limitProps.maxHeight.value, Math.max(limitProps.minHeight.value, val)))
     },
     setTop(val: number) {
       if (props.disabledY) {
         return top.value
       }
-      return setTop(Math.min(limitProps.maxTop.value, Math.max(limitProps.minTop.value, val)))
+      return $setTop(Math.min(limitProps.maxTop.value, Math.max(limitProps.minTop.value, val)))
     },
     setLeft(val: number) {
       if (props.disabledX) {
         return left.value
       }
-      return setLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)))
+      return $setLeft(Math.min(limitProps.maxLeft.value, Math.max(limitProps.minLeft.value, val)))
     },
     setRotate(val: number) {
       if (!props.rotatable) {
@@ -247,7 +271,8 @@ export function initDraggableContainer(
   parentSize: ReturnType<typeof initParent>
 ) {
   const { left: x, top: y, width: w, height: h, dragging, id, rotate: r } = containerProps
-  const { setDragging, setEnable, setResizing, setResizingHandle } = containerProps
+  const { setDragging, setEnable, setResizing, setResizingHandle, parentScaleX, parentScaleY, triggerKey } =
+    containerProps
   const { setTop, setLeft } = limitProps
 
   let lstX = 0
@@ -283,11 +308,17 @@ export function initDraggableContainer(
   const handleDrag = (e: MouseEvent) => {
     e.preventDefault()
 
+    const trigger = triggerKey.value === 'right' ? 3 : 1
+
+    if (trigger !== e.which) {
+      return
+    }
+
     if (!(dragging.value && containerRef.value)) return
 
     const [pageX, pageY] = getPosition(e)
-    const deltaX = pageX - lstPageX
-    const deltaY = pageY - lstPageY
+    const deltaX = (pageX - lstPageX) / parentScaleX.value
+    const deltaY = (pageY - lstPageY) / parentScaleY.value
 
     let newLeft = lstX + deltaX
     let newTop = lstY + deltaY
@@ -487,7 +518,7 @@ export function initResizeHandle(
     setResizingMinWidth(props.minW)
     setResizingMinHeight(props.minH)
 
-    props.onChange({ x: left.value, y: top.value, w: width.value, h: height.value })
+    // props.onChange({ x: left.value, y: top.value, w: width.value, h: height.value })
 
     removeEvent(documentElement, MOVE_HANDLES, resizeHandleDrag)
     removeEvent(documentElement, UP_HANDLES, resizeHandleUp)
@@ -606,7 +637,7 @@ export function watchProps(props: any, limits: ReturnType<typeof initLimitSizeAn
 export function initRotateContainer(
   containerRef: Ref<HTMLElement | undefined>,
   containerProps: ReturnType<typeof initState>,
-  props: ExtractPropTypes<typeof VdrProps>,
+  props: any,
   emit: any
 ) {
   const { setRotating, setRotate, rotate } = containerProps
