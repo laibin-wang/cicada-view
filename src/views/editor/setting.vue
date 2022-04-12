@@ -1,7 +1,14 @@
 <template>
   <div class="setting" :class="show ? 'active' : ''">
     <IconSvg class="btn" name="shuangjiantou" @click="handleDradwer" />
-    <div>aaasss</div>
+    <div class="tabs">
+      <div class="tabs-header">
+        <div class="item" v-for="item in tabs" :key="item.name" :class="tabctive===item.name?'active':''" @click="tabClick(item.name)">
+          <IconSvg :name="item.icon" />
+          <span>{{item.label}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,15 +19,37 @@ import IconSvg from '@/components/icon-svg/index.vue'
 export default defineComponent({
   name: 'Editor',
   components: { IconSvg },
-  setup() {
+  setup () {
     const show = ref(false)
     const handleDradwer = (): void => {
       show.value = !show.value
     }
 
+    const tabctive = ref('setting')
+    const tabs = [{
+      label: '配置',
+      name: 'setting',
+      icon: 'canshushezhi'
+    }, {
+      label: '数据',
+      name: 'data',
+      icon: 'relation-analysis-full'
+    }, {
+      label: '参数',
+      name: 'params',
+      icon: 'navicon-zdcs'
+    }]
+
+    const tabClick = (name: string): void => {
+      tabctive.value = name
+    }
+
     return {
       show,
-      handleDradwer
+      handleDradwer,
+      tabs,
+      tabctive,
+      tabClick
     }
   }
 })
@@ -51,6 +80,33 @@ export default defineComponent({
     border-radius: 12px 0;
     &:hover {
       fill: var(--color-primary);
+    }
+  }
+  .tabs{
+    position: relative;
+    &-header{
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      background: #27343e;
+      .item{
+        flex: 1;
+        line-height: 40px;
+        color: #bcc9d4;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        &.active{
+          color: #409eff;
+          border-bottom: 1px solid #409eff;
+        }
+      }
+      .cicada__icon{
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+      }
     }
   }
 }
