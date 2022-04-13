@@ -1,5 +1,5 @@
 <template>
-  <div class="setting" :class="show ? 'active' : ''">
+  <div class="attr-setting" :class="show ? 'active' : ''">
     <IconSvg class="btn" name="shuangjiantou" @click="handleDradwer" />
     <div class="tabs">
       <div class="tabs-header">
@@ -8,8 +8,7 @@
           :key="item.name"
           class="item"
           :class="tabctive === item.name ? 'active' : ''"
-          @click="tabClick(item.name)"
-        >
+          @click="tabClick(item.name)">
           <IconSvg :name="item.icon" />
           <span>{{ item.label }}</span>
         </div>
@@ -22,7 +21,7 @@
 import { defineComponent, ref } from 'vue'
 import IconSvg from '@/components/icon-svg/index.vue'
 export default defineComponent({
-  name: 'Editor',
+  name: 'AttrSetting',
   components: { IconSvg },
   setup() {
     const show = ref(false)
@@ -62,7 +61,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.setting {
+.attr-setting {
   position: relative;
   height: 100%;
   width: 0;

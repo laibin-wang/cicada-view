@@ -11,14 +11,7 @@
       <div class="head-right" />
     </div>
     <div class="main">
-      <div class="menu">
-        <div class="menu_anticon">
-          anticon
-        </div>
-        <div class="menu_components">
-          module
-        </div>
-      </div>
+      <Menubar />
       <div class="section-mark">
         <sketch-ruler
           ref="refSketch"
@@ -42,7 +35,7 @@
             </div>
           </div>
         </div>
-        <Setting />
+        <AttrSetting />
       </div>
     </div>
   </div>
@@ -53,11 +46,12 @@ import { defineComponent, ref } from 'vue'
 import SketchRuler from '@/components/sketch-ruler/index'
 import { linesType } from '@/components/sketch-ruler/interface'
 import IconSvg from '@/components/icon-svg/index.vue'
-import Setting from './setting.vue'
+import AttrSetting from './attrSetting.vue'
+import Menubar from './menubar.vue'
 
 export default defineComponent({
   name: 'Editor',
-  components: { SketchRuler, IconSvg, Setting },
+  components: { SketchRuler, IconSvg, AttrSetting, Menubar },
   setup () {
     const refSketch = ref(null)
     const lines = ref({})
@@ -131,18 +125,6 @@ export default defineComponent({
     width: 100%;
     height: calc(100vh - 40px);
     display: flex;
-  }
-  .menu {
-    display: flex;
-    z-index: 3;
-    &_anticon {
-      width: 40px;
-      background-color: #141414;
-    }
-    &_components {
-      width: 160px;
-      background-color: #24282e;
-    }
   }
   .section-mark {
     position: relative;
