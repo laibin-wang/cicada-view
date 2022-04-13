@@ -1,14 +1,18 @@
 <template>
   <div class="setting" :class="show ? 'active' : ''">
     <IconSvg class="btn" name="shuangjiantou" @click="handleDradwer" />
-    <div class="content">
-      <div class="tab-head">
-        <template v-for="item in tabs" :key="item.id">
-          <div :class="tabInx === item.id ? 'active' : ''" @click="tabClick(item.id)">
-            <IconSvg :name="item.icon" />
-            <span>{{ item.label }}</span>
-          </div>
-        </template>
+    <div class="tabs">
+      <div class="tabs-header">
+        <div
+          v-for="item in tabs"
+          :key="item.name"
+          class="item"
+          :class="tabctive === item.name ? 'active' : ''"
+          @click="tabClick(item.name)"
+        >
+          <IconSvg :name="item.icon" />
+          <span>{{ item.label }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -17,44 +21,40 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import IconSvg from '@/components/icon-svg/index.vue'
-
 export default defineComponent({
   name: 'Editor',
   components: { IconSvg },
   setup() {
     const show = ref(false)
-    const tabInx = ref(1)
-    const tabs = [
-      {
-        id: 1,
-        label: '配置',
-        icon: 'canshushezhi'
-      },
-      {
-        id: 2,
-        label: '数据',
-        icon: 'relation-analysis-full'
-      },
-      {
-        id: 3,
-        label: '参数',
-        icon: 'navicon-zdcs'
-      }
-    ]
-
     const handleDradwer = (): void => {
       show.value = !show.value
     }
-
-    const tabClick = (inx: number): void => {
-      tabInx.value = inx
+    const tabctive = ref('setting')
+    const tabs = [
+      {
+        label: '配置',
+        name: 'setting',
+        icon: 'canshushezhi'
+      },
+      {
+        label: '数据',
+        name: 'data',
+        icon: 'relation-analysis-full'
+      },
+      {
+        label: '参数',
+        name: 'params',
+        icon: 'navicon-zdcs'
+      }
+    ]
+    const tabClick = (name: string): void => {
+      tabctive.value = name
     }
-
     return {
       show,
-      tabInx,
-      tabs,
       handleDradwer,
+      tabs,
+      tabctive,
       tabClick
     }
   }
@@ -88,34 +88,31 @@ export default defineComponent({
       fill: var(--color-primary);
     }
   }
-  .content {
+  .tabs {
     position: relative;
-  }
-  .tab-head {
-    display: flex;
-    height: 40px;
-    color: #fff;
-    background-color: #141414;
-    font-size: 12px;
-    & > div {
-      flex: 1 1;
-      line-height: 40px;
-      text-align: center;
-      border-bottom: 1px solid transparent;
-      cursor: pointer;
-    }
-    .active {
-      color: var(--color-primary);
-      border-bottom-color: var(--color-primary);
-      .cicada__icon {
-        fill: var(--color-primary);
+    &-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 40px;
+      background: #27343e;
+      .item {
+        flex: 1;
+        line-height: 40px;
+        color: #bcc9d4;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        &.active {
+          color: #409eff;
+          border-bottom: 1px solid #409eff;
+        }
       }
-    }
-    .cicada__icon {
-      width: 17px;
-      height: 17px;
-      vertical-align: middle;
-      margin-right: 5px;
+      .cicada__icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+      }
     }
   }
 }
