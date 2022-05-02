@@ -62,7 +62,8 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .attr-setting {
-  position: relative;
+  position: absolute;
+  right: 0;
   height: 100%;
   width: 0;
   background: #24282e;

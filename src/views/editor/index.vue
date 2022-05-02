@@ -46,7 +46,7 @@ import { defineComponent, ref } from 'vue'
 import SketchRuler from '@/components/sketch-ruler/index'
 import { linesType } from '@/components/sketch-ruler/interface'
 import IconSvg from '@/components/icon-svg/index.vue'
-import AttrSetting from './attrSetting.vue'
+import AttrSetting from './components/drawerAttr.vue'
 import Menubar from './menubar.vue'
 
 export default defineComponent({
@@ -63,13 +63,17 @@ export default defineComponent({
     }
 
     const handleWheel = (e: MouseEvent): void => {
-      refSketch.value.setScroll(e.currentTarget.scrollTop, false)
-      refSketch.value.setScroll(e.currentTarget.scrollLeft, true)
+      if (refSketch.value) {
+        refSketch.value.setScroll((e.currentTarget as HTMLElement).scrollTop, false)
+        refSketch.value.setScroll((e.currentTarget as HTMLElement).scrollLeft, true)
+      }
     }
 
     const handleScroll = (e: MouseEvent): void => {
-      refSketch.value.setScroll(e.currentTarget.scrollTop, false)
-      refSketch.value.setScroll(e.currentTarget.scrollLeft, true)
+      if (refSketch.value) {
+        refSketch.value.setScroll((e.currentTarget as HTMLElement).scrollTop, false)
+        refSketch.value.setScroll((e.currentTarget as HTMLElement).scrollLeft, true)
+      }
     }
 
     return {

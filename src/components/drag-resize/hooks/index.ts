@@ -505,6 +505,7 @@ export function initResizeHandle(
       setWidth(lstW + deltaX)
     }
 
+    debugger
     emit('resizing', { x: left.value, y: top.value, w: width.value, h: height.value })
   }
 

@@ -1,7 +1,7 @@
-import { ResizingHandle, ContainerProvider, ParentSize, ReferenceLineMap, HandleEvent } from '../type'
+import { ResizingHandle, ContainerProvider, ParentSize, ReferenceLineMap, HandleEvent, Position } from '../type'
 import { ALL_HANDLES } from '../core/resizable'
 
-export function filterHandles(handles: ResizingHandle[]): [] {
+export function filterHandles(handles: ResizingHandle[]): ResizingHandle[] {
   if (handles && handles.length > 0) {
     const result: ResizingHandle[] = []
     handles.forEach((item) => {
@@ -102,9 +102,9 @@ export function getReferenceLineMap(
 
   const widgetPositionStore = containerProvider.getPositionStore(id)
 
-  Object.values(widgetPositionStore).forEach(({ x, y, w, h }) => {
-    referenceLine.row.push(y, y + h, y + h / 2)
-    referenceLine.col.push(x, x + w, x + w / 2)
+  Object.values(widgetPositionStore).forEach((pos: Position): void => {
+    referenceLine.row.push(pos.y, pos.y + pos.h, pos.y + pos.h / 2)
+    referenceLine.col.push(pos.x, pos.x + pos.w, pos.x + pos.w / 2)
   })
 
   const referenceLineMap: ReferenceLineMap = {

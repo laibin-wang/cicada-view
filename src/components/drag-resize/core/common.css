@@ -79,15 +79,15 @@
   left: 50%;
   pointer-events: auto;
   top: 0;
-  transform: translateX(-50%) translateY(calc(-100% - 15px));
+  transform: translateX(-50%) translateY(calc(-100% - 10px));
   user-select: none;
   background-image: url('./rotate.svg');
-  background-position: 4px 4px;
+  background-position: 2px 2px;
   background-repeat: no-repeat;
   background-size: 70%;
-  border: 2px solid var(--color-primary, #2f54eb);
+  border: 1px solid var(--color-primary, #2f54eb);
   border-radius: 50%;
-  height: 30px;
+  height: 15px;
+  width: 15px;
   position: absolute;
-  width: 30px;
 }

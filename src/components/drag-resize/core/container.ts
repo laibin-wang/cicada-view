@@ -74,7 +74,7 @@ export default defineComponent({
       }
 
       return [
-        ...this.matchedCols.map((item) => {
+        ...this.matchedCols.map((item: number) => {
           return h('div', {
             style: {
               width: '0',
@@ -86,7 +86,7 @@ export default defineComponent({
             }
           })
         }),
-        ...this.matchedRows.map((item) => {
+        ...this.matchedRows.map((item: number) => {
           return h('div', {
             style: {
               width: '100%',
